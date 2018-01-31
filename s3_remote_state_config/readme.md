@@ -2,6 +2,8 @@
 
 Required Var - `<name>`
 
+__NOTE__ - S3 bucket name must be _globally_ unique, so `<name>` should reflect that
+
 ```bash
 $ terraform init
 
