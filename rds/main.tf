@@ -1,3 +1,12 @@
+data "terraform_remote_state" "stack" {
+  backend = "s3"
+  config{
+    bucket = "${var.s3_terraform_bucket}"
+    key    = "${var.stack_name}/terraform.tfstate"
+    region ="${var.aws_region}"
+  }
+}
+
 module "db" {
   source = "terraform-aws-modules/rds/aws"
 
