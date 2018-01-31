@@ -1,7 +1,3 @@
-data "aws_region" "current" {
-  current = true
-}
-
 resource "aws_s3_bucket" "this" {
   bucket = "${var.name}"
   acl    = "private"
