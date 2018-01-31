@@ -1,3 +1,12 @@
+terraform {
+  version = "~> 0.11"
+  region  = "${var.region}"
+
+  backend "s3" {
+    encrypt = true
+  }
+}
+
 # Declare the data source
 data "aws_availability_zones" "available" {}
 
