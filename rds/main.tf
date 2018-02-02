@@ -1,53 +1,74 @@
-data "terraform_remote_state" "stack" {
+data "terraform_remote_state" "vpc" {
   backend = "s3"
   config{
     bucket = "${var.s3_terraform_bucket}"
-    key    = "${var.stack_name}/terraform.tfstate"
-    region ="${var.aws_region}"
+    key    = "${var.environment}/network.tfstate"
+    region = "${var.region}"
+  }
+}
+
+resource "aws_security_group" "postgresql" {
+
+  name = "postgresql"
+
+  description = "RDS postgres servers"
+  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
+
+  # Only postgres in
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outbound traffic.
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 module "db" {
   source = "terraform-aws-modules/rds/aws"
 
-  identifier = format("%s.%s", ${var.environment}, postgresqldb))
+  identifier = "${var.environment}-postgresql-db"
 
-  engine            = "postgres"
-  engine_version    = "9.6.3"
-  instance_class    = "db.t2.large"
+  engine            = "${var.engine}"
+  engine_version    = "${var.engine_version}"
+  instance_class    = "${var.instance_type}"
   allocated_storage = 5
   storage_encrypted = false
 
-  # kms_key_id        = "arm:aws:kms:<region>:<accound id>:key/<kms key id>"
-  name = "demodb"
+  name = "${var.environment}-postgresql-db"
 
-  # NOTE: Do NOT use 'user' as the value for 'username' as it throws:
-  # "Error creating DB Instance: InvalidParameterValue: MasterUsername
-  # user cannot be used as it is a reserved word used by the engine"
-  username = "demouser"
+  username = "${var.environment}user"
 
   password = "OhNoesPlainTextPwAreBadMkay!"
-  port     = "5432"
+  port     = "${var.port}"
 
-  vpc_security_group_ids = ["${data.aws_security_group.default.id}"]
+  vpc_security_group_ids = ["${aws_security_group.postgresql.id}"]
 
-  maintenance_window = "Mon:00:00-Mon:03:00"
-  backup_window      = "03:00-06:00"
+  maintenance_window = "${var.maintenance_window}"
+  backup_window      = "${var.backup_window}"
 
   # disable backups to create DB faster
+  # obviously not something to do in a prod setting
   backup_retention_period = 0
 
   tags = {
     Terraform   = "true"
-    Environment = "${var.region}"
+    Environment = "${var.environment}"
   }
 
   # DB subnet group
-  subnet_ids = ["${data.aws_subnet_ids.all.ids}"]
+  subnet_ids = ["${data.terraform_remote_state.vpc.private_subnets}"]
 
   # DB parameter group
-  family = "postgres9.6"
+  family = "${var.parameter_group_family}"
 
   # Snapshot name upon DB deletion
-  final_snapshot_identifier = "demodb"
+  final_snapshot_identifier = "${var.environment}-postgresql-db"
 }
