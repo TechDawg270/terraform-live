@@ -1,3 +1,11 @@
 region = "us-west-2"
 environment = "dev"
-instance_size = ""
+instance_type = "db.t2.micro"
+engine = "postgres"
+engine_version = "9.6.3"
+parameter_group_family = "postgres9.6"
+maintenance_window = "Sat:00:00-Mon:03:00"
+backup_window = "03:00-06:00"
+port = 5432
+s3_terraform_bucket = "gloo-poc"
+s3_bucket_region = "us-west-2"
