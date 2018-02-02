@@ -64,7 +64,7 @@ module "db" {
   }
 
   # DB subnet group
-  subnet_ids = ["${data.terraform_remote_state.vpc.private_subnets}"]
+  subnet_ids = ["${data.terraform_remote_state.vpc.vpc_private_subnets}"]
 
   # DB parameter group
   family = "${var.parameter_group_family}"
