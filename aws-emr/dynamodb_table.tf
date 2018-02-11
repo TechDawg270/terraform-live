@@ -6,7 +6,7 @@ resource "aws_dynamodb_table" "emr_kinesis_dynamodb_table" {
   range_key      = "RangeKey"
 
   attribute {
-    name = "HaskKey"
+    name = "HashKey"
     type = "S"
   }
 
