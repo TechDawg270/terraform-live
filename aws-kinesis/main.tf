@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = "${var.region}"
+}
+
 resource "aws_kinesis_stream" "raw_temp_data_stream" {
   name             = "iot-raw-temp-data"
   shard_count      = 1
@@ -20,7 +24,7 @@ resource "aws_kinesis_stream" "raw_temp_data_stream" {
 
 resource "aws_kinesis_stream" "raw_apache_log_data_stream" {
   name             = "raw-apache-log-data"
-  shard_count      = 1
+  shard_count      = 2
   retention_period = "${var.retention_period}"
 
   tags = {
