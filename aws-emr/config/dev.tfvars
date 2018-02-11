@@ -1,2 +1,10 @@
 region = "us-east-1"
 environment = "dev"
+release_label = "emr-4.6.0"
+applications = ["Hue","Hive","Spark","Pig"]
+ebs_root_volume_size = 100
+master_instance_type = "m3.xlarge"
+core_instance_type = "m1.medium"
+core_instance_count = 2
+s3_terraform_bucket = "gloo-poc"
+s3_bucket_region = "us-west-2"
