@@ -3,7 +3,7 @@ data "terraform_remote_state" "vpc" {
   config{
     bucket = "${var.s3_terraform_bucket}"
     key    = "${var.environment}/network.tfstate"
-    region = "${var.region}"
+    region = "${var.s3_bucket_region}"
   }
 }
 
