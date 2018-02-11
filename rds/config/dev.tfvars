@@ -1,4 +1,4 @@
-region = "us-west-2"
+region = "us-east-1"
 environment = "dev"
 instance_type = "db.t2.micro"
 engine = "postgres"
