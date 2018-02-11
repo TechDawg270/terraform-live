@@ -7,6 +7,10 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
+provider "aws" {
+  region = "${var.region}"
+}
+
 resource "aws_security_group" "postgresql" {
 
   name = "postgresql"
