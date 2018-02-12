@@ -30,7 +30,7 @@ data "terraform_remote_state" "iam" {
 }
 
 resource "aws_security_group" "allow_all" {
-  name        = "allow_all"
+  name        = "allow-all"
   description = "Allow all inbound traffic"
   vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
 
