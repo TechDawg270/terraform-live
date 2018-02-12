@@ -1,0 +1,6 @@
+region = "us-east-1"
+environment = "dev"
+instance_type = "t2.micro"
+role = "nginx-app"
+s3_terraform_bucket = "gloo-poc"
+s3_bucket_region = "us-west-2"
