@@ -1,5 +1,5 @@
 resource "aws_security_group" "app_instance" {
-  vpc_id      = "${data.terraform_remote_state.vpc.id}"
+  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
   name        = "${var.environment}-app-sg"
   description = "security group for my instance"
 
@@ -27,7 +27,7 @@ resource "aws_security_group" "app_instance" {
 }
 
 resource "aws_security_group" "elb_securitygroup" {
-  vpc_id      = "${data.terraform_remote_state.vpc.id}"
+  vpc_id      = "${data.terraform_remote_state.vpc.vpc_id}"
   name        = "${var.environment}-elb-sg"
   description = "Security Group for application ELB"
 
