@@ -6,8 +6,6 @@ See the module documentation on the [terraform module registry AWS RDS Page](htt
 
 Set `env=<env>`
 
-Not preferable to hard-code but in a declarative world where no interpolation is offered (yet) for resources used by `terraform init` it is necessary
-
 ```bash
 env=dev
 terraform get -update=true
