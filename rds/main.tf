@@ -46,7 +46,7 @@ module "db" {
   allocated_storage = 5
   storage_encrypted = false
 
-  name = "${var.environment}-postgresql-db"
+  name = "${var.environment}postgresql"
 
   username = "${var.environment}user"
 
