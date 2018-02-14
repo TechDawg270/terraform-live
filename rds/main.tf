@@ -1,3 +1,16 @@
+terraform {
+  version = "~> 0.11"
+  region  = "${var.region}"
+
+  backend "s3" {
+    encrypt = true
+  }
+}
+
+provider "aws" {
+  region = "${var.region}"
+}
+
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config{
@@ -5,10 +18,6 @@ data "terraform_remote_state" "vpc" {
     key    = "${var.environment}/network.tfstate"
     region = "${var.s3_bucket_region}"
   }
-}
-
-provider "aws" {
-  region = "${var.region}"
 }
 
 resource "aws_security_group" "postgresql" {
