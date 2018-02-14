@@ -27,3 +27,13 @@ variable "s3_bucket_region" {
     description = "S3 Remote State Storage Bucket Region"
     default     = "us-west-2"
 }
+
+variable "slack_notify_url" {
+    description = "Webook URL for Slack Integration"
+    default     = ""
+}
+
+variable "key_name" {
+    description = "The key name to use for the instance"
+    default     = "devops_infra_mgmt"
+}
