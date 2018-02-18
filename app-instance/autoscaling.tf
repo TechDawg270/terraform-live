@@ -13,7 +13,7 @@ resource "aws_launch_configuration" "app_launchconfig" {
   user_data            = "${file("./scripts/nginx_set_homepage.sh")}"
 
   lifecycle {
-      create_before_destroy = true
+    create_before_destroy = true
   }
 }
 
@@ -24,6 +24,7 @@ resource "aws_autoscaling_group" "app_autoscaling_group" {
   min_size                  = 1
   max_size                  = 5
   health_check_grace_period = 300
+  wait_for_capacity_timeout  = "15m"
   health_check_type         = "ELB"
   load_balancers            = ["${aws_elb.app_elb.name}"]
   force_delete              = true
@@ -42,5 +43,9 @@ resource "aws_autoscaling_group" "app_autoscaling_group" {
 
   timeouts {
     delete = "15m"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
