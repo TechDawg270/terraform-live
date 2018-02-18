@@ -8,7 +8,8 @@ terraform {
 }
 
 provider "aws" {
-  region = "${var.region}"
+  region  = "${var.region}"
+  version = "~> 1.0"
 }
 
 data "terraform_remote_state" "vpc" {
