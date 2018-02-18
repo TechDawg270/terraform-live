@@ -1,3 +1,3 @@
-output "kibana_endpoint" {
-	value = "${aws_elasticsearch_domain.es_domain.kibana_endpoint}"
+output "kinesis_stream_name" {
+  value = "${aws_kinesis_stream.kinesis_stream_raw_temp_data.name}"
 }
