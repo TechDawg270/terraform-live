@@ -18,7 +18,7 @@ resource "aws_launch_configuration" "app_launchconfig" {
 }
 
 resource "aws_autoscaling_group" "app_autoscaling_group" {
-  name                      = "${var.environment}-autoscaling-group"
+  name                      = "${var.environment}-autoscaling-group-${aws_launch_configuration.app_launchconfig.name}"
   vpc_zone_identifier       = ["${data.terraform_remote_state.vpc.vpc_public_subnets}"]
   launch_configuration      = "${aws_launch_configuration.app_launchconfig.name}"
   min_size                  = 1
