@@ -12,3 +12,8 @@ output "vpc_private_subnets" {
 	description = "The private subnets of the VPC"
 	value       = "${module.vpc.private_subnets}"
 }
+
+output "restricted_access_sg" {
+	description = "Security Group that allows all traffic from home/office"
+	value       = "${aws_security_group.restricted_access.id}"
+}
