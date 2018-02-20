@@ -1,0 +1,9 @@
+region = "us-east-1"
+environment = "dev"
+instance_device_name = "/dev/xvdh"
+jenkins_version = ""
+app_instance_count = 1
+master_instance_type = "t2.medium"
+s3_terraform_bucket = "gloo-poc"
+s3_bucket_region = "us-west-2"
+key_name = "devops_infra_mgmt"
