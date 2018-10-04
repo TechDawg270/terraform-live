@@ -4,10 +4,10 @@ resource "aws_elb" "app_elb" {
   security_groups = ["${aws_security_group.elb_securitygroup.id}"]
 
   listener {
-    instance_port = 80
+    instance_port     = 80
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
   }
 
   health_check {
